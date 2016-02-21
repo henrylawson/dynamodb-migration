@@ -23,6 +23,8 @@ Or install it yourself as:
 In a rake task or in your applications start up, simply add:
 
 ```ruby
+require 'dynamodb/migration'
+
 options = {
   client: dynamodb-client,        # an Aws::DynamoDB::Client instance
   path: '~/my_project/migrations' # the full path to the folder where your migration classes will live
@@ -33,6 +35,8 @@ DynamoDB::Migration.run_all_migrations(options)
 Or if you are using a Sinatra application, in your `config.ru`:
 
 ```ruby
+require 'dynamodb/migration'
+
 # the full path to the folder where your migration classes will live
 # we are assuming you will place your migrations in a "migrations" folder
 # next to config.ru
