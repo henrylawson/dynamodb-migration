@@ -81,8 +81,8 @@ module DynamoDB
       end
 
       def migration_classes
-        ObjectSpace.each_object(Migration.singleton_class)
-                   .reject { |c| c == Migration }
+        ObjectSpace.each_object(DynamoDB::Migration::Unit.singleton_class)
+                   .reject { |c| c == DynamoDB::Migration::Unit }
       end
 
       def migration_executed?(clazz)
