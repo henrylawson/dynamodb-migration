@@ -5,7 +5,7 @@ require 'dynamodb/migration/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "dynamodb-migration"
-  spec.version       = Dynamodb::Migration::VERSION
+  spec.version       = DynamoDB::Migration::VERSION
   spec.authors       = ["Henry Lawson"]
   spec.email         = ["henry.lawson@foinq.com"]
 

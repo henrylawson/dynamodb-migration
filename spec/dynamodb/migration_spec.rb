@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Dynamodb::Migration do
+describe DynamoDB::Migration do
   it 'has a version number' do
-    expect(Dynamodb::Migration::VERSION).not_to be nil
+    expect(DynamoDB::Migration::VERSION).not_to be nil
   end
 
   before do

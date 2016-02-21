@@ -2,7 +2,7 @@ require "dynamodb/migration/version"
 require "dynamodb/migration/execute"
 require "dynamodb/migration/unit"
 
-module Dynamodb
+module DynamoDB
   module Migration
     def self.registered(app)
       options = {
