@@ -1,10 +1,10 @@
 [![Gem Version](https://badge.fury.io/rb/dynamodb-migration.svg)](https://badge.fury.io/rb/dynamodb-migration)
 # DynamoDB::Migration
 
-Allows for the creation of simple DynamoDB commands that will be executed only
-once against a DynamoDB database to allow you to "migrate" the schema of the
-database over time. This is a simple implementation for DynamoDB, similar to
-tools such as FlywayDB and Active Record Migrations.
+Allows for the creation of simple DynamoDB migrations that will be executed
+only once against a DynamoDB database to allow you to "migrate" the schema of
+the database over time. This is a simple implementation for DynamoDB, similar
+to tools such as FlywayDB and Active Record Migrations.
 
 ## Installation
 
