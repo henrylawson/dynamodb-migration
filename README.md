@@ -1,4 +1,4 @@
-[![Gem Version](https://badge.fury.io/rb/dynamodb-client.svg)](https://badge.fury.io/rb/dynamodb-client)
+[![Gem Version](https://badge.fury.io/rb/dynamodb-migration.svg)](https://badge.fury.io/rb/dynamodb-migration)
 # DynamoDB::Migration
 
 Allows for the creation of simple DynamoDB commands that will be executed only
