@@ -1,7 +1,10 @@
 [![Gem Version](https://badge.fury.io/rb/dynamodb-client.svg)](https://badge.fury.io/rb/dynamodb-client)
 # DynamoDB::Migration
 
-Allows for the creation of simple DynamoDB commands that will be executed only once against a DynamoDB database to allow you to "migrate" the schema of the database over time. This is a simple implementation for DynamoDB, similar to tools such as FlywayDB and Active Record Migrations.
+Allows for the creation of simple DynamoDB commands that will be executed only
+once against a DynamoDB database to allow you to "migrate" the schema of the
+database over time. This is a simple implementation for DynamoDB, similar to
+tools such as FlywayDB and Active Record Migrations.
 
 ## Installation
 
@@ -27,7 +30,7 @@ In a rake task or in your applications start up, simply add:
 require 'dynamodb/migration'
 
 options = {
-  client: dynamodb-client,        # an Aws::DynamoDB::Client instance
+  client: dynamodb_client,        # an Aws::DynamoDB::Client instance
   path: '~/my_project/migrations' # the full path to the folder where your migration classes will live
 }
 DynamoDB::Migration.run_all_migrations(options)
@@ -95,16 +98,27 @@ which it creates and maintains internally.
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run
+`rake spec` to run the tests. You can also run `bin/console` for an interactive
+prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. To
+release a new version, update the version number in `version.rb`, and then run
+`bundle exec rake release`, which will create a git tag for the version, push
+git commits and tags, and push the `.gem` file to
+[rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/dynamodb-migration. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/henrylawson/dynamodb-migration. This project is intended to
+be a safe, welcoming space for collaboration, and contributors are expected to
+adhere to the [Contributor Covenant](http://contributor-covenant.org) code of
+conduct.
 
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT
+License](http://opensource.org/licenses/MIT).
 
