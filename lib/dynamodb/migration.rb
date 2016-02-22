@@ -5,6 +5,16 @@ require "dynamodb/migration/unit"
 module DynamoDB
   module Migration
     class << self
+      DEFAULT_MIGRATION_TABLE_NAME = 'migrations'
+
+      def migration_table_name
+        @migration_table_name || DEFAULT_MIGRATION_TABLE_NAME
+      end
+
+      def migration_table_name=(name)
+        @migration_table_name = name
+      end
+
       def registered(app)
         options = {
           client: app.dynamodb_client,
