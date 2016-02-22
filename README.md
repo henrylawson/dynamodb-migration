@@ -93,8 +93,7 @@ end
 ```
 
 DynamoDB::Migration will detect this class and execute once against your
-DynamoDB instance. It will record the execution in a table called `migrations`
-which it creates and maintains internally.
+DynamoDB instance. It will record the execution in a table specified by `DynamoDB::Migration.migration_table_name` (`migrations` by default) which it creates and maintains internally.
 
 ## Development
 
