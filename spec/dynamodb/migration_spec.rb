@@ -60,4 +60,14 @@ describe DynamoDB::Migration do
 
     expect(client.list_tables.table_names).to include('users', 'sessions')
   end
+
+  it 'allows for custom migration table names' do
+    custom_options = options.merge(migration_table_name: 'production_migrations')
+
+    DynamoDB::Migration.run_all_migrations(custom_options)
+
+    expect(client.list_tables.table_names).to contain_exactly('users',
+                                                              'sessions',
+                                                              'production_migrations')
+  end
 end

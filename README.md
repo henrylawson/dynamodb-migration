@@ -30,8 +30,9 @@ In a rake task or in your applications start up, simply add:
 require 'dynamodb/migration'
 
 options = {
-  client: dynamodb_client,        # an Aws::DynamoDB::Client instance
-  path: '~/my_project/migrations' # the full path to the folder where your migration classes will live
+  client: dynamodb_client,           # an Aws::DynamoDB::Client instance
+  path: '/app/my_project/migrations' # the full path to the folder where your migration classes will live
+  migration_table_name: 'migrations' # optional, the name of the table to use for migrations, default is "migrations"
 }
 DynamoDB::Migration.run_all_migrations(options)
 ```
@@ -45,6 +46,10 @@ require 'dynamodb/migration'
 # we are assuming you will place your migrations in a "migrations" folder
 # next to config.ru
 set :migrations_path, File.join(File.dirname(__FILE__), 'migrations')
+
+# optional, the name of the table to use for migrations, default is
+# "migrations"
+set :migration_table_name, File.join(File.dirname(__FILE__), 'migrations')
 
 # registering the below requires the "dynamodb-client" gem, alternatively
 # you can return a Aws::DynamoDB::Client instance from a method named
@@ -93,7 +98,9 @@ end
 ```
 
 DynamoDB::Migration will detect this class and execute once against your
-DynamoDB instance. It will record the execution in a table specified by `DynamoDB::Migration.migration_table_name` (`migrations` by default) which it creates and maintains internally.
+DynamoDB instance. It will record the execution in a table specified by the
+option `:migration_table_name` (`migrations` by default) which it
+creates and maintains internally.
 
 ## Development
 
@@ -115,9 +122,7 @@ be a safe, welcoming space for collaboration, and contributors are expected to
 adhere to the [Contributor Covenant](http://contributor-covenant.org) code of
 conduct.
 
-
 ## License
 
 The gem is available as open source under the terms of the [MIT
 License](http://opensource.org/licenses/MIT).
-
