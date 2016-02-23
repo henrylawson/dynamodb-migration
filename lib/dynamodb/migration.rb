@@ -4,20 +4,32 @@ require "dynamodb/migration/unit"
 
 module DynamoDB
   module Migration
-    def self.registered(app)
-      options = {
-        client: app.dynamodb_client,
-        path:   app.settings.migrations_path,
-      }
-      run_all_migrations(options)
-    end
+    class << self
+      DEFAULT_MIGRATION_TABLE_NAME = 'migrations'
 
-    def self.run_all_migrations(options)
-      Dir.glob("#{options[:path]}/**/*.rb").each do |file|
-        require file
+      def migration_table_name
+        @migration_table_name || DEFAULT_MIGRATION_TABLE_NAME
       end
-      Execute.new(options[:client])
-             .update_all
+
+      def migration_table_name=(name)
+        @migration_table_name = name
+      end
+
+      def registered(app)
+        options = {
+          client: app.dynamodb_client,
+          path:   app.settings.migrations_path,
+        }
+        run_all_migrations(options)
+      end
+
+      def run_all_migrations(options)
+        Dir.glob("#{options[:path]}/**/*.rb").each do |file|
+          require file
+        end
+        Execute.new(options[:client])
+               .update_all
+      end
     end
   end
 end

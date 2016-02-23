@@ -30,7 +30,7 @@ module DynamoDB
 
       def record_failed_migration(clazz)
         client.delete_item({
-          table_name: "migrations",
+          table_name: Migration.migration_table_name,
           key: {
             "file" => clazz_filename(clazz),
           },
@@ -43,7 +43,7 @@ module DynamoDB
 
       def record_start_migration(clazz)
         client.put_item({
-          table_name: "migrations",
+          table_name: Migration.migration_table_name,
           item: {
             "file" => clazz_filename(clazz),
             "executed_at" => Time.now.iso8601,
@@ -57,7 +57,7 @@ module DynamoDB
 
       def record_successful_migration(clazz)
         client.update_item({
-          table_name: "migrations",
+          table_name: Migration.migration_table_name,
           key: {
             "file" => clazz_filename(clazz),
           },
@@ -87,7 +87,7 @@ module DynamoDB
 
       def migration_executed?(clazz)
         client.get_item({
-          table_name: "migrations",
+          table_name: Migration.migration_table_name,
           key: {
             "file" => clazz_filename(clazz),
           },
@@ -98,7 +98,7 @@ module DynamoDB
 
       def ensure_migrations_table_exists
         client.create_table(
-          table_name: "migrations",
+          table_name: Migration.migration_table_name,
           attribute_definitions: [
             {
               attribute_name: "file",
@@ -119,7 +119,7 @@ module DynamoDB
             stream_enabled: true,
             stream_view_type: "NEW_AND_OLD_IMAGES",
           },
-        ) unless table_exists?(client, 'migrations')
+        ) unless table_exists?(client, Migration.migration_table_name)
       end
 
       def table_exists?(client, table_name)
