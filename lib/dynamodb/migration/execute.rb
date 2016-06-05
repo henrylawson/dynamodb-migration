@@ -123,6 +123,8 @@ module DynamoDB
             stream_view_type: "NEW_AND_OLD_IMAGES",
           },
         ) unless table_exists?(client, migration_table_name)
+      rescue Aws::DynamoDB::Errors::ResourceInUseException => e
+        raise e unless e.message =~ /preexisting table/i
       end
 
       def table_exists?(client, table_name)
