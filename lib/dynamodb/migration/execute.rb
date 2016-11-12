@@ -20,7 +20,7 @@ module DynamoDB
       attr_reader :client
 
       def apply_migration(clazz)
-        return if migration_executed?(clazz)
+        return if migration_completed?(clazz)
         record_start_migration(clazz)
         migration = clazz.new
         migration.client = client
@@ -86,17 +86,20 @@ module DynamoDB
       def migration_classes
         ObjectSpace.each_object(DynamoDB::Migration::Unit.singleton_class)
                    .reject { |c| c == DynamoDB::Migration::Unit }
+                   .sort_by { |c| clazz_filename(c) }
       end
 
-      def migration_executed?(clazz)
-        client.get_item({
+      def migration_completed?(clazz)
+        migration = client.get_item({
           table_name: migration_table_name,
           key: {
             "file" => clazz_filename(clazz),
           },
-          attributes_to_get: ["file"],
+          attributes_to_get: ["file", "completed"],
           consistent_read: true,
         }).item
+
+        migration && migration["completed"]
       end
 
       def ensure_migrations_table_exists
