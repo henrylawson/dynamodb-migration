@@ -103,29 +103,34 @@ module DynamoDB
       end
 
       def ensure_migrations_table_exists
-        client.create_table(
-          table_name: migration_table_name,
-          attribute_definitions: [
-            {
-              attribute_name: "file",
-              attribute_type: "S",
+        unless table_exists?(client, migration_table_name)
+          client.create_table(
+            table_name: migration_table_name,
+            attribute_definitions: [
+              {
+                attribute_name: "file",
+                attribute_type: "S",
+              },
+            ],
+            key_schema: [
+              {
+                attribute_name: "file",
+                key_type: "HASH",
+              },
+            ],
+            provisioned_throughput: {
+              read_capacity_units: 1,
+              write_capacity_units: 1,
             },
-          ],
-          key_schema: [
-            {
-              attribute_name: "file",
-              key_type: "HASH",
+            stream_specification: {
+              stream_enabled: true,
+              stream_view_type: "NEW_AND_OLD_IMAGES",
             },
-          ],
-          provisioned_throughput: {
-            read_capacity_units: 1,
-            write_capacity_units: 1,
-          },
-          stream_specification: {
-            stream_enabled: true,
-            stream_view_type: "NEW_AND_OLD_IMAGES",
-          },
-        ) unless table_exists?(client, migration_table_name)
+          )
+          puts "Waiting for table #{migration_table_name} to exist..."
+          client.wait_until(:table_exists, {:table_name => migration_table_name})
+          puts "#{migration_table_name} exists, continuing migration."
+        end
       rescue Aws::DynamoDB::Errors::ResourceInUseException => e
         raise e unless e.message =~ /preexisting table/i
       end
