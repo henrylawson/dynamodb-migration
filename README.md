@@ -51,11 +51,6 @@ set :migrations_path, File.join(File.dirname(__FILE__), 'migrations')
 # "migrations"
 set :migration_table_name, 'migrations'
 
-# registering the below requires the "dynamodb-client" gem, alternatively
-# you can return a Aws::DynamoDB::Client instance from a method named
-# `dynamodb_client`
-register DynamoDB::Client
-
 # registering this extension will automatically run migrations when the app
 # starts up
 register DynamoDB::Migration

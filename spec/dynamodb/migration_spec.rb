@@ -12,7 +12,7 @@ describe DynamoDB::Migration do
     ENV['AWS_DYNAMODB_ENDPOINT'] ||= 'http://192.168.99.100:8000/'
   end
 
-  let(:client) { DynamoDB::Client.instance }
+  let(:client) { Aws::DynamoDB::Client.new(endpoint: ENV['AWS_DYNAMODB_ENDPOINT']) }
 
   let(:options) do
     {
