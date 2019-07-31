@@ -3,9 +3,10 @@ module DynamoDB
     class Execute
       DEFAULT_MIGRATION_TABLE_NAME = 'migrations'
 
-      def initialize(client, migration_table_name)
+      def initialize(client, migration_table_name, tags)
         @client = client
         @migration_table_name = migration_table_name
+        @tags = tags
       end
 
       def update_all
@@ -17,7 +18,7 @@ module DynamoDB
 
       private
 
-      attr_reader :client
+      attr_reader :client, :tags
 
       def apply_migration(clazz)
         return if migration_completed?(clazz)
@@ -126,6 +127,7 @@ module DynamoDB
               stream_enabled: true,
               stream_view_type: "NEW_AND_OLD_IMAGES",
             },
+            tags: tags
           )
           puts "Waiting for table #{migration_table_name} to exist..."
           client.wait_until(:table_exists, {:table_name => migration_table_name})
@@ -145,6 +147,10 @@ module DynamoDB
         @migration_table_name ||
           ENV['DYNAMODB_MIGRATION_TABLE_NAME'] ||
           DEFAULT_MIGRATION_TABLE_NAME
+      end
+
+      def tags
+        @tags || []
       end
     end
   end

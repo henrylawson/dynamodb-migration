@@ -18,7 +18,7 @@ module DynamoDB
         Dir.glob("#{options[:path]}/**/*.rb").each do |file|
           require file
         end
-        Execute.new(options[:client], options[:migration_table_name])
+        Execute.new(options[:client], options[:migration_table_name], options[:tags])
                .update_all
       end
     end

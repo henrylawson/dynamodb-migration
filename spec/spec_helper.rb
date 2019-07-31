@@ -1,3 +1,3 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'dynamodb/migration'
-require 'dynamodb/client'
+require "aws-sdk-dynamodb"
